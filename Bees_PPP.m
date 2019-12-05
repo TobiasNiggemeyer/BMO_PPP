@@ -29,8 +29,8 @@ nrb = 2;
 nre = 3 ;
 
 % das hier ist ein Problem
-nrbees = zeros(nrb + 1, 1);
-nreees = zeros(nre + 1, 1);
+% nrbees = zeros(nrb + 1, 1);
+% nreees = zeros(nre + 1, 1);
 
 % init zufällige Bienen
 rand_bees = createRandomBees(cocktailMatrix,ns,x);
