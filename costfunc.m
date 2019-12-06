@@ -42,7 +42,7 @@ function [cost] = costfunc(beeMatrix,stockMatrix,cocktailMatrix)
         amount = getCocktailCount(bee, stock);
         % get amount of ingredients to buy
         toBuy = getIngredientQuantity(bee, stock, amount);
-        cost = n_stock + amount - toBuy;
+        cost = n_stock + sum(amount) - 0.1 * toBuy;
     end
 
 end
