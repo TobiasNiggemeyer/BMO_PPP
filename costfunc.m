@@ -1,4 +1,4 @@
-function [cost] = costfunc(beeMatrix,stockMatrix,cocktailMatrix)
+function [cost, amount, toBuy] = costfunc(beeMatrix,stockMatrix,cocktailMatrix)
 
     %get size of cocktailMatrix
     [cocktails_cnt, ingredients_cnt] = size(cocktailMatrix);
@@ -33,16 +33,19 @@ function [cost] = costfunc(beeMatrix,stockMatrix,cocktailMatrix)
 
     % see, if all stocked ingredients are used by bee
     n_check = sum(~all(bee == 0) & stock);
-
+    amount = 0;
+    toBuy = 0;
     % if bee doesn't use all stocked ingredients, return n_check
     if(n_check < n_stock)
         cost = n_check;
+        
     else
         % get highest possible amount of cocktails 
         amount = getCocktailCount(bee, stock);
         % get amount of ingredients to buy
         toBuy = getIngredientQuantity(bee, stock, amount);
-        cost = n_stock + sum(amount) - 0.1 * toBuy;
+        amount = sum(amount);
+        cost = n_stock + amount - 0.1 * toBuy;
     end
 
 end

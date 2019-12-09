@@ -35,6 +35,8 @@ nre = 3 ;
 
 %vector for the loss value of the best bee per iteration
 best_loss_f = [];
+best_amount_f = [];
+best_tobuy_f = [];
 
 % das hier ist ein Problem
 % nrbees = zeros(nrb + 1, 1);
@@ -43,14 +45,14 @@ best_loss_f = [];
 % init zufällige Bienen
 [rand_bees, bee_count] = createRandomBees(cocktailMatrix,ns,x,bee_count);
 
-f = zeros(1,ns);
+f = zeros(3,ns);
 
 for i = 1:ns
-    f(1,i) = costfunc(rand_bees(:,i), stockMatrix, cocktailMatrix);
+    [f(1,i), f(2,i), f(3,i)] = costfunc(rand_bees(:,i), stockMatrix, cocktailMatrix);
 end
 
 % finde die nb besten Bienen
-[A, I] = maxk(f, nb);
+[A, I] = maxk(f(1,:), nb);
 B = rand_bees(:,I);
 loesung = B(:,1);
 
@@ -107,28 +109,36 @@ while(t < t_max)
     % finde die nb besten Bienen für die nächste Iteration
 
     for i = 1:ns
-        f(1,i) = costfunc(rand_bees(:,i), stockMatrix, cocktailMatrix);
+        [f(1,i), f(2,i), f(3,i)] = costfunc(rand_bees(:,i), stockMatrix, cocktailMatrix);
     end
 
     % finde die nb besten Bienenus
-    [A, I] = maxk(f, nb);
+    [A, I] = maxk(f(1,:), nb);
     B = rand_bees(:,I);
     loesung = B(:,1);
-    best_f = f(1,1);
-    
+        
     %save lost value best bee of iteration 
-    best_loss_f = [best_loss_f,max(f)];
+    best_loss_f = [best_loss_f,max(f(1,:))];
+    best_amount_f = [best_amount_f, f(2,I(1))];
+    best_tobuy_f = [best_tobuy_f, f(3,I(1))];
 
     % plot the best bee
+    figure(1)
     plot(best_loss_f);
     xlabel("Generation");
     ylabel("costfunc(bestBee)");
+    figure(2)
+    plot(best_amount_f);
+    xlabel("Generation");
+    ylabel("Anzahl an Cocktails")
+    yyaxis right
+    plot(best_tobuy_f);
+    ylabel("Zuzukaufende Menge")
     t = t+1;
 end
 format shortg;
 d = clock-c; 
 disp(d(1,4:end))
-best_f
 end
     
 
