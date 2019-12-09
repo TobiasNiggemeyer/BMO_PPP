@@ -33,6 +33,9 @@ bee_count = 0;
 nrb = 2;
 nre = 3 ;
 
+%vector for the loss value of the best bee per iteration
+best_loss_f = [];
+
 % das hier ist ein Problem
 % nrbees = zeros(nrb + 1, 1);
 % nreees = zeros(nre + 1, 1);
@@ -112,7 +115,14 @@ while(t < t_max)
     B = rand_bees(:,I);
     loesung = B(:,1);
     best_f = f(1,1);
+    
+    %save lost value best bee of iteration 
+    best_loss_f = [best_loss_f,max(f)];
 
+    % plot the best bee
+    plot(best_loss_f);
+    xlabel("Generation");
+    ylabel("costfunc(bestBee)");
     t = t+1;
 end
 format shortg;
