@@ -128,6 +128,7 @@ while(t < t_max)
     xlabel("Generation");
     ylabel("costfunc(bestBee)");
     figure(2)
+    yyaxis left
     plot(best_amount_f);
     xlabel("Generation");
     ylabel("Anzahl an Cocktails")
