@@ -13,13 +13,14 @@ cocktails_with_ingredients = []
 
 #read in available_ingredients
 available_ingredients = []
-with open('available_ingredients.csv') as csvfile:
+with open('available_ingredients_2.csv') as csvfile:
     readCSV = csv.reader(csvfile, delimiter=',')
     for row in readCSV:
         available_ingredients.append(str(row[0]).split(':')[0])
 
 #request cocktails which include the available ingredients
 for ingredient in available_ingredients:
+    print(ingredient)
     with urllib.request.urlopen("https://www.thecocktaildb.com/api/json/v1/1/filter.php?i="+ingredient) as url:
         data = json.loads(url.read().decode())
         for drinks in data['drinks']:
@@ -85,6 +86,6 @@ for cocktail in cocktail_matrix_raw:
             ingredient_idx = ingredient_idx+1
 
 #write matrix to mat file (or any other file which can be included by matlab)
-with open("cocktails.csv","w+") as my_csv:
+with open("cocktails_2.csv","w+") as my_csv:
     csvWriter = csv.writer(my_csv,delimiter=',')
     csvWriter.writerows(cocktail_matrix_sorted)
