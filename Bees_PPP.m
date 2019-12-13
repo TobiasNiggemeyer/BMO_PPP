@@ -1,25 +1,17 @@
-function [loesung, best_f] = Bees_PPP(t_max)
-% Aufruf:    [loesung] = RandomWalk(t_max,d,func,xmin,xmax,ymin,ymax)
-% t_max:     maximale Anzahl Iterationen, default: 1000
-% d:         maximale Schrittweite,, default: 0.1
-% func:      Funktionsargument, default: @fRosenbrock
-% xmin:      minimaler Wert f�r x, default: -3
-% xmax:      maximaler Wert f�r x, default: 3
-% ymin:      minimaler Wert f�r y, default: -3
-% ymax:      maximaler Wert f�r y, default: 3
-% loesung:   [x_min, y_min, f_min]
+function [loesung] = Bees_PPP(t_max)
 
-% Defaultwerte f�r die Anzahl der Iterationen und Schrittweite
-% und der Standard-Funktion
-if ~exist('t_max','var') t_max = 50; end
+% Defaultwerte fuer die Anzahl der Iterationen
+if ~exist('t_max','var') t_max = 500; end
 
-cocktailMatrix = readtable('Cocktail_Database/cocktails.csv');
-stockMatrix = readtable('Cocktail_Database/available_ingredients.csv');
+cocktailMatrix = readtable('Cocktail_Database/cocktails_1.csv');
+stockMatrix = readtable('Cocktail_Database/available_ingredients_1.csv');
+
+% benötigte Zeit für die Optimierung
 format shortg;
 c = clock;
 
+% Anzahl an verschiedenen Cocktails in einer Biene
 x = 5;
-
 % Anzahl Bienen gesamt
 ns = 15;
 % Die besten und exzellenten Bienen
@@ -37,10 +29,6 @@ nre = 3 ;
 best_loss_f = [];
 best_amount_f = [];
 best_tobuy_f = [];
-
-% das hier ist ein Problem
-% nrbees = zeros(nrb + 1, 1);
-% nreees = zeros(nre + 1, 1);
 
 % init zufällige Bienen
 [rand_bees, bee_count] = createRandomBees(cocktailMatrix,ns,x,bee_count);
